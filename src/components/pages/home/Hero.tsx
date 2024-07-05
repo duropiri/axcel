@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
+import Swiper from "swiper";
 
 interface ComponentProps {
   className?: string;
@@ -18,6 +19,7 @@ interface Project {
   src: string;
   media: string;
 }
+
 
 const Hero = ({ className, projects }: ComponentProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ const Hero = ({ className, projects }: ComponentProps) => {
           autoHeight: false,
           centeredSlides: true,
           followFinger: true,
-          mousewheelControl: true,
+          // mousewheelControl: true,
           freeMode: true,
           slideToClickedSlide: false,
           slidesPerView: "auto",

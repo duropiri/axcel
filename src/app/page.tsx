@@ -8,7 +8,8 @@ import HomeSection from "@/components/pages/home/layout/HomeSection";
 import gsap from "gsap";
 
 export default function Home() {
-  const { isLoaded, finishLoading, isAnimating, finishAnimation } = usePreloader();
+  const { isLoaded, finishLoading, isAnimating, finishAnimation } =
+    usePreloader();
   const [currentIndex, setCurrentIndex] = useState(-1); // -1 indicates no section is in view
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const navRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -23,9 +24,11 @@ export default function Home() {
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       let anyIntersecting = false;
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const index = sectionRefs.current.indexOf(entry.target as HTMLDivElement);
+          const index = sectionRefs.current.indexOf(
+            entry.target as HTMLDivElement
+          );
           if (index !== -1) {
             setCurrentIndex(index);
             console.log(`Project ${index + 1} is in view`);
@@ -43,7 +46,7 @@ export default function Home() {
       threshold: 0.5,
     });
 
-    sectionRefs.current.forEach(section => {
+    sectionRefs.current.forEach((section) => {
       if (section) {
         observer.observe(section);
       }
@@ -56,27 +59,40 @@ export default function Home() {
 
   useEffect(() => {
     const handleNavClick = (index: number) => {
-      sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      sectionRefs.current[index]?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     };
 
     navRefs.current.forEach((nav, index) => {
       if (nav) {
         nav.addEventListener("click", () => handleNavClick(index));
         nav.addEventListener("mouseenter", () => {
-          gsap.to(nav.querySelector(".thumbImg"), { opacity: 1, duration: 0.5 });
+          gsap.to(nav.querySelector(".thumbImg"), {
+            opacity: 1,
+            duration: 0.5,
+          });
         });
         nav.addEventListener("mouseleave", () => {
-          gsap.to(nav.querySelector(".thumbImg"), { opacity: 0.5, duration: 0.5 });
+          gsap.to(nav.querySelector(".thumbImg"), {
+            opacity: 0.5,
+            duration: 0.5,
+          });
         });
       }
     });
 
     const handleMouseEnter = () => {
       if (navContainerRef.current) {
-        gsap.set(navContainerRef.current, { height: "75vh", width: "5rem", duration: 0 });
+        gsap.set(navContainerRef.current, {
+          height: "75vh",
+          width: "5rem",
+          duration: 0,
+        });
         navContainerRef.current.classList.remove("closed");
       }
-      navRefs.current.forEach(nav => nav?.classList.remove("closed"));
+      navRefs.current.forEach((nav) => nav?.classList.remove("closed"));
       gsap.to(".sc-nav-content-block", { opacity: 0 });
     };
 
@@ -84,14 +100,19 @@ export default function Home() {
       if (navContainerRef.current) {
         navContainerRef.current.classList.add("closed");
         setTimeout(() => {
-          gsap.to(navContainerRef.current, { height: "1.5rem", width: "1.5rem", duration: 0.2 });
+          gsap.to(navContainerRef.current, {
+            height: "1.5rem",
+            width: "1.5rem",
+            duration: 0.2,
+          });
         }, 700);
         setTimeout(() => {
-          navContainerRef.current.classList.add("closed");
+          if (navContainerRef.current)
+            navContainerRef.current.classList.add("closed");
         }, 1000);
         gsap.to(".sc-nav-content-block", { opacity: 1 });
       }
-      navRefs.current.forEach(nav => nav?.classList.add("closed"));
+      navRefs.current.forEach((nav) => nav?.classList.add("closed"));
     };
 
     const scNav = document.querySelector(".sc-nav");
@@ -107,9 +128,15 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between text-[#d8c8af] snap-y snap-mandatory overflow-y-scroll h-screen w-screen">
       {/* Preloader/Splash Screen */}
-      <Preloader finishLoading={finishLoading} finishAnimation={finishAnimation} />
+      <Preloader
+        finishLoading={finishLoading}
+        finishAnimation={finishAnimation}
+      />
       {/* Hero Section */}
-      <Hero className="scroll-snap-align snap-always snap-start min-h-screen" projects={Projects} />
+      <Hero
+        className="scroll-snap-align snap-always snap-start min-h-screen"
+        projects={Projects}
+      />
       {/* Projects Sections */}
       {Projects.map((project, index) => (
         <HomeSection
@@ -118,7 +145,9 @@ export default function Home() {
           project={project}
           projects={Projects}
           index={index}
-          ref={el => (sectionRefs.current[index] = el)}
+          ref={(el) => {
+            sectionRefs.current[index] = el;
+          }}
         />
       ))}
       {/* Index Indicator */}
@@ -138,7 +167,11 @@ export default function Home() {
                 id={`w-node-b6c5c2b0-cf6f-792c-4f54-594384552a7${index + 9}`}
                 className="index-num justify-end absolute -mb-[0.15rem]"
                 style={{
-                  transform: `translate(0px, ${index === currentIndex ? "0%" : `${index > currentIndex ? "110%" : "-110%"}`})`,
+                  transform: `translate(0px, ${
+                    index === currentIndex
+                      ? "0%"
+                      : `${index > currentIndex ? "110%" : "-110%"}`
+                  })`,
                   transition: "transform 0.5s",
                 }}
               >
@@ -159,20 +192,20 @@ export default function Home() {
         }}
       >
         <div className="absolute w-[4px] h-[4px] items-center justify-center flex top-0 left-0">
-          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]"/>
-          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]"/>
+          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]" />
+          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]" />
         </div>
         <div className="absolute w-[4px] h-[4px] items-center justify-center flex top-0 right-0">
-          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]"/>
-          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]"/>
+          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]" />
+          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]" />
         </div>
         <div className="absolute w-[4px] h-[4px] items-center justify-center flex bottom-0 left-0">
-          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]"/>
-          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]"/>
+          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]" />
+          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]" />
         </div>
         <div className="absolute w-[4px] h-[4px] items-center justify-center flex bottom-0 right-0">
-          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]"/>
-          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]"/>
+          <div className="absolute w-[4px] h-[1px] bg-[#d8c8af]" />
+          <div className="absolute w-[1px] h-[4px] bg-[#d8c8af]" />
         </div>
         <div
           ref={navContainerRef}
@@ -184,7 +217,9 @@ export default function Home() {
               <div
                 key={index}
                 className="sc-nav-content closed w-full h-full transform-gpu transition-all relative overflow-hidden border border-[#d8c8af]"
-                ref={el => (navRefs.current[index] = el)}
+                ref={(el) => {
+                  navRefs.current[index] = el;
+                }}
               >
                 <div className="sc-nav-content-block z-[6] bg-[#d8c8af] absolute top-0 bottom-0 left-0 right-0" />
                 {project.media === "motion" ? (
@@ -198,7 +233,11 @@ export default function Home() {
                     className="thumbImg w-full aspect-video"
                   />
                 ) : (
-                  <img src={project.src} className="thumbImg w-full" alt={project.name} />
+                  <img
+                    src={project.src}
+                    className="thumbImg w-full"
+                    alt={project.name}
+                  />
                 )}
               </div>
             ))}

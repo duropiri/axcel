@@ -71,7 +71,7 @@ const Preloader: React.FC<PreloaderProps> = ({
       gsap.to(".splash-screen", {
         clipPath: "inset(0% 0% 100% 0%)",
         duration: 1.2,
-        ease: [0.84, 0, 0.42, 1],
+        ease: "power4.inOut",
         onComplete: () => {
           setTimeout(() => {
             finishAnimation();
@@ -82,7 +82,7 @@ const Preloader: React.FC<PreloaderProps> = ({
       gsap.to(".splash-screen", {
         clipPath: "inset(0% 0% 0% 0%)",
         duration: 1.2,
-        ease: [0.84, 0, 0.42, 1],
+        ease: "power4.inOut",
       });
     }
   }, [loadingPercentage, finishAnimation]);
@@ -92,7 +92,9 @@ const Preloader: React.FC<PreloaderProps> = ({
       ".splash-content",
       { scale: 1 },
       {
-        scale: [1, 1.1, 1],
+        keyframes: {
+          scale: [1, 1.1, 1],
+        },
         duration: 0.8,
         ease: "easeInOut",
         repeat: -1,
