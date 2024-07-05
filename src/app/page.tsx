@@ -185,7 +185,7 @@ export default function Home() {
       </div>
       {/* Project Selector */}
       <aside
-        className="sc-nav closed z-10 justify-center items-center duration-1000 transition-all flex fixed bottom-[1rem] left-[1rem]"
+        className="sc-nav closed z-10 justify-center items-center duration-1000 transition-all hidden sm:flex fixed bottom-[1rem] left-[1rem]"
         style={{
           opacity: currentIndex === -1 ? 0 : 1,
           transition: "opacity 0.5s",

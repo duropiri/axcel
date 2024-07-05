@@ -97,7 +97,7 @@ const Preloader: React.FC<PreloaderProps> = ({
         },
         duration: 0.8,
         ease: "power4.inOut",
-        repeat: -1,
+        repeat: 0,
         yoyo: true,
       }
     );
