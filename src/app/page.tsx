@@ -31,7 +31,7 @@ export default function Home() {
           );
           if (index !== -1) {
             setCurrentIndex(index);
-            console.log(`Project ${index + 1} is in view`);
+            // console.log(`Project ${index + 1} is in view`);
             anyIntersecting = true;
           }
         }

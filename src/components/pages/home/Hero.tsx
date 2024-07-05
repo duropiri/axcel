@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import Swiper from "swiper";
+import Swiper from "swiper/bundle";
 
 interface ComponentProps {
   className?: string;
