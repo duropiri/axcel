@@ -10,7 +10,7 @@ export const Projects = [
   },
   {
     name: "find you balance",
-    brand: "New Balance x Axcel",
+    brand: "New Balance",
     type: "commercial",
     duration: "00:30",
     src: "/videos/video2.mp4",
@@ -37,7 +37,7 @@ export const Projects = [
   },
   {
     name: "Coupe Kidjvck",
-    brand: "kidjvck x Axcel",
+    brand: "kidjvck",
     type: "Music Video",
     duration: "00:15",
     src: "/videos/video5.mp4",
@@ -46,7 +46,7 @@ export const Projects = [
   },
   {
     name: "SK fashion week",
-    brand: "manepravda x Axcel",
+    brand: "manepravda",
     type: "fashion",
     duration: "00:46",
     src: "/videos/video6.mp4",
