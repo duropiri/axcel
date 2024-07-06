@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import hoverEffect from "hover-effect";
+import HoverEffect from "hover-effect";
 
 interface HeroComponentProps {
   className?: string;
@@ -18,8 +18,8 @@ function Hero({ className, name, bio, infos }: HeroComponentProps) {
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    const effect = new hoverEffect({
-      parent: document.querySelector(".connect-hero-image"),
+    const effect = new HoverEffect({
+      parent: document.querySelector(".connect-hero-image") as HTMLElement,
       intensity: 0.3,
       imagesRatio: 5 / 4,
       image1: "/images/image2.jpg",
@@ -51,7 +51,7 @@ function Hero({ className, name, bio, infos }: HeroComponentProps) {
         <div className="size-full grid-rows-[auto] sm:grid-cols-[0.5fr_1fr] [grid-auto-columns:1fr] grid">
           <div className="w-node self-start justify-self-start h-full w-full sm:w-auto sm:max-w-[40ch] gap-y-[0.75rem] text-left flex-col justify-between items-start sm:mr-[4vw] pt-[9rem] pb-[2rem] flex z-10">
             <div>
-              <span className="pr-[2px] font-benzin">{name}</span> {bio}
+              <span className="pr-[2px] font-benzin font-black">{name}</span> {bio}
             </div>
             <div className="gap-x-[7vw] gap-y-[1rem] grid-rows-[auto] grid-cols-[1fr] [grid-auto-columns:1fr] grid w-full sm:w-auto">
               {infos?.map((info, index) => (

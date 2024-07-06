@@ -182,7 +182,7 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
     }, []);
 
     return (
-      <section ref={ref} className={`block w-full ${className}`}>
+      <section ref={ref} className={`block w-full h-[100vh] ${className}`}>
         {project?.media == "motion" && (
           <section
             className={`${className} relative flex flex-col items-center justify-center w-[100vw] h-[100vh] overflow-hidden bg-black`}
