@@ -188,7 +188,7 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
             className={`${className} relative flex flex-col items-center justify-center w-[100vw] h-[100vh] overflow-hidden bg-black`}
           >
             <div
-              className={`absolute flex flex-col items-start justify-start uppercase pointer-events-none z-10 leading-none text-6xl ${
+              className={`absolute flex flex-col max-w-[10ch] items-start justify-start uppercase pointer-events-none z-10 leading-none text-6xl ${
                 project.order === "top-left" &&
                 " top-[15%] left-0 ml-[4rem] sm:ml-[6rem]"
               }${
@@ -242,7 +242,7 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
             </div>
             <div className="flex flex-row items-end justify-end absolute right-0 bottom-0 mr-4 sm:mr-10 mb-3 sm:mb-6 pointer-events-auto text-center medium-text uppercase mix-blend-difference leading-none">
               <div className="relative flex flex-row items-center gap-2">
-                {index + 1 === projects?.length ? "End" : "Scroll"}
+                {index + 1 === projects?.length ? "" : "Scroll"}
                 <svg
                   fill="currentColor"
                   className={`animate-bounce w-[2vw] md:w-[1vw] h-full ${
