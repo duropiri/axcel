@@ -20,6 +20,7 @@ interface Project {
   media: string;
 }
 
+
 const Hero = ({ className, projects }: ComponentProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const swiperInstance = useRef<Swiper | null>(null);
@@ -230,7 +231,6 @@ const Hero = ({ className, projects }: ComponentProps) => {
                   muted
                   loop
                   className="block h-full w-full object-cover"
-                  poster={`${project.src}`}
                 />
                 <div
                   aria-hidden="true"

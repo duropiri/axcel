@@ -20,39 +20,48 @@ interface Project {
 
 const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
   ({ className, project, projects, index }: HomeSectionProps, ref: any) => {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const audioCtxRef = useRef<AudioContext | null>(null);
-    const gainNodeRef = useRef<GainNode | null>(null);
-    const [isMuted, setIsMuted] = useState(true);
-    const [isInitialized, setIsInitialized] = useState(false);
-    const [isMuting, setIsMuting] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null); // Reference to the main video element
+    const audioCtxRef = useRef<AudioContext | null>(null); // Reference to the AudioContext
+    const gainNodeRef = useRef<GainNode | null>(null); // Reference to the GainNode
+    const [isMuted, setIsMuted] = useState(true); // State to track whether the video is muted (controls the icon)
+    const [isInitialized, setIsInitialized] = useState(false); // State to track whether the audio context is initialized
+    const [isMuting, setIsMuting] = useState(false); // Flag to indicate if a mute operation is in progress
 
+    // Function to initialize the audio context and gain node
     const initializeAudio = () => {
       if (videoRef.current && !audioCtxRef.current) {
+        // Create a new AudioContext
         const audioCtx = new (window.AudioContext ||
           (window as any).webkitAudioContext)();
         audioCtxRef.current = audioCtx;
 
+        // Create a MediaElementAudioSourceNode from the video element
         const sourceNode = audioCtx.createMediaElementSource(videoRef.current);
+        // Create a GainNode to control the audio volume
         const gainNode = audioCtx.createGain();
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime); // Start with volume 0
         gainNodeRef.current = gainNode;
 
+        // Connect the source node to the gain node and then to the audio context destination
         sourceNode.connect(gainNode);
         gainNode.connect(audioCtx.destination);
 
-        setIsInitialized(true);
+        setIsInitialized(true); // Mark the audio context as initialized
       }
     };
 
+    // Function to fade the audio in or out
     const fadeAudio = (mute: boolean) => {
       if (gainNodeRef.current && audioCtxRef.current) {
         const now = audioCtxRef.current.currentTime;
+        // Cancel any scheduled volume changes
         gainNodeRef.current.gain.cancelScheduledValues(now);
+        // Set the current volume value
         gainNodeRef.current.gain.setValueAtTime(
           gainNodeRef.current.gain.value,
           now
         );
+        // Fade the volume to 0 if muting, or to 1 if unmuting over 1/2 a second
         gainNodeRef.current.gain.linearRampToValueAtTime(
           mute ? 0 : 1,
           now + 0.5
@@ -60,40 +69,44 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
       }
     };
 
+    // Function to toggle the mute state
     const handleMuteToggle = () => {
-      if (isMuting) return;
-      setIsMuting(true);
+      if (isMuting) return; // Prevent action if mute operation is in progress
+      setIsMuting(true); // Set muting flag to prevent rapid toggles
 
       if (!isInitialized) {
-        initializeAudio();
+        initializeAudio(); // Initialize the audio context if not already initialized
       }
 
       if (isMuted) {
+        // Unmuting: fade audio in immediately
         fadeAudio(false);
         setIsMuted(false);
         if (videoRef.current) {
-          videoRef.current.muted = false;
+          videoRef.current.muted = false; // Unmute the video element immediately
         }
-        setIsMuting(false);
+        setIsMuting(false); // Clear muting flag
       } else {
+        // Muting: change SVG immediately and fade audio out
         setIsMuted(true);
         fadeAudio(true);
         setTimeout(() => {
           if (videoRef.current) {
-            videoRef.current.muted = true;
+            videoRef.current.muted = true; // Mute the video element after 1 second
           }
-          setIsMuting(false);
+          setIsMuting(false); // Clear muting flag after mute operation is completed
         }, 500);
       }
     };
 
+    // Effect to start the video muted and playing automatically
     useEffect(() => {
       const handleIntersection = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (videoRef.current) {
               videoRef.current.src = project?.src || "";
-              videoRef.current.play().catch(console.error);
+              videoRef.current.play().catch(console.error); // Start playing video and handle errors
             }
           } else {
             if (videoRef.current) {
@@ -119,15 +132,16 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
       };
     }, [project]);
 
+    // GSAP Animations
     useEffect(() => {
       const loadGSAP = async () => {
         const { gsap } = await import("gsap");
         const { ScrollTrigger } = await import("gsap/ScrollTrigger");
         gsap.registerPlugin(ScrollTrigger);
 
-        const effectElements = gsap.utils.toArray("[data-speed]");
+        let effectElements = gsap.utils.toArray("[data-speed]");
         effectElements.forEach((el: any) => {
-          const speed = parseFloat(el.getAttribute("data-speed"));
+          let speed = parseFloat(el.getAttribute("data-speed"));
           gsap.fromTo(
             el,
             { y: 0 },
@@ -140,11 +154,12 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
                 end: "bottom top",
                 scrub: true,
                 onRefresh: (self) => {
-                  const start = Math.max(0, self.start);
-                  const distance = self.end - start;
-                  const end = start + distance / speed;
+                  let start = Math.max(0, self.start); // ensure no negative values
+                  let distance = self.end - start;
+                  let end = start + distance / speed;
                   (self as any).setPositions(start, end);
                   if (self.animation) {
+                    // Check if self.animation is defined
                     (self as any).animation.vars.y =
                       (end - start) * (1 - speed);
                     self.animation
@@ -168,7 +183,7 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
 
     return (
       <section ref={ref} className={`block w-full h-[100vh] ${className}`}>
-        {project?.media === "motion" && (
+        {project?.media == "motion" && (
           <section
             className={`${className} relative flex flex-col items-center justify-center w-[100vw] h-[100vh] overflow-hidden bg-black`}
           >
@@ -220,11 +235,9 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
                 ref={videoRef}
                 autoPlay
                 loop
-                muted
-                playsInline
+                muted // Ensure video element starts muted
+                playsInline // Ensure video plays inline
                 className="w-[100vh] sm:w-[100vw] h-[100vw] sm:h-[100vh] object-cover pointer-events-none brightness-50"
-                preload="auto"
-                poster={`${project.src}`}
               />
             </div>
             <div className="flex flex-row items-end justify-end absolute right-0 bottom-0 mr-4 sm:mr-10 mb-3 sm:mb-6 pointer-events-auto text-center medium-text uppercase mix-blend-difference leading-none">
