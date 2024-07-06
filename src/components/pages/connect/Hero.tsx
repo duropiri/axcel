@@ -22,8 +22,8 @@ function Hero({ className, name, bio, infos }: HeroComponentProps) {
       parent: document.querySelector(".connect-hero-image") as HTMLElement,
       intensity: 0.3,
       imagesRatio: 5 / 4,
-      image1: "/images/image2.jpg",
-      image2: "/images/image3.jpg",
+      image1: "/images/image2.webp",
+      image2: "/images/image3.webp",
       displacementImage: "/images/displacement.webp",
     });
 
