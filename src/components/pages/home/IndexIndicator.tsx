@@ -20,7 +20,7 @@ const IndexIndicator: React.FC<IndexIndicatorProps> = ({ currentIndex, total }) 
             <div
               key={index}
               h-index=""
-              id={`w-node-b6c5c2b0-cf6f-792c-4f54-594384552a7${index + 9}`}
+              id={`${index + 9}`}
               className="index-num justify-end absolute -mb-[0.15rem]"
               style={{
                 transform: `translate(0px, ${
