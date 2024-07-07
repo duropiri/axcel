@@ -132,54 +132,54 @@ const HomeSection = forwardRef<HTMLDivElement, HomeSectionProps>(
       };
     }, [project]);
 
-    // GSAP Animations
-    useEffect(() => {
-      const loadGSAP = async () => {
-        const { gsap } = await import("gsap");
-        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-        gsap.registerPlugin(ScrollTrigger);
+    // // GSAP Animations
+    // useEffect(() => {
+    //   const loadGSAP = async () => {
+    //     const { gsap } = await import("gsap");
+    //     const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+    //     gsap.registerPlugin(ScrollTrigger);
 
-        let effectElements = gsap.utils.toArray("[data-speed]");
-        effectElements.forEach((el: any) => {
-          let speed = parseFloat(el.getAttribute("data-speed"));
-          gsap.fromTo(
-            el,
-            { y: 0 },
-            {
-              y: 0,
-              ease: "none",
-              scrollTrigger: {
-                trigger: el,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: true,
-                onRefresh: (self) => {
-                  let start = Math.max(0, self.start); // ensure no negative values
-                  let distance = self.end - start;
-                  let end = start + distance / speed;
-                  (self as any).setPositions(start, end);
-                  if (self.animation) {
-                    // Check if self.animation is defined
-                    (self as any).animation.vars.y =
-                      (end - start) * (1 - speed);
-                    self.animation
-                      .invalidate()
-                      .progress(1)
-                      .progress(self.progress);
-                  }
-                },
-              },
-            }
-          );
-        });
+    //     let effectElements = gsap.utils.toArray("[data-speed]");
+    //     effectElements.forEach((el: any) => {
+    //       let speed = parseFloat(el.getAttribute("data-speed"));
+    //       gsap.fromTo(
+    //         el,
+    //         { y: 0 },
+    //         {
+    //           y: 0,
+    //           ease: "none",
+    //           scrollTrigger: {
+    //             trigger: el,
+    //             start: "top bottom",
+    //             end: "bottom top",
+    //             scrub: true,
+    //             onRefresh: (self) => {
+    //               let start = Math.max(0, self.start); // ensure no negative values
+    //               let distance = self.end - start;
+    //               let end = start + distance / speed;
+    //               (self as any).setPositions(start, end);
+    //               if (self.animation) {
+    //                 // Check if self.animation is defined
+    //                 (self as any).animation.vars.y =
+    //                   (end - start) * (1 - speed);
+    //                 self.animation
+    //                   .invalidate()
+    //                   .progress(1)
+    //                   .progress(self.progress);
+    //               }
+    //             },
+    //           },
+    //         }
+    //       );
+    //     });
 
-        return () => {
-          ScrollTrigger.getAll().forEach((st) => st.kill());
-        };
-      };
+    //     return () => {
+    //       ScrollTrigger.getAll().forEach((st) => st.kill());
+    //     };
+    //   };
 
-      loadGSAP();
-    }, []);
+    //   loadGSAP();
+    // }, []);
 
     return (
       <section ref={ref} className={`block w-full h-[100vh] ${className}`}>

@@ -67,7 +67,7 @@ export default function Home() {
         className="scroll-snap-align snap-always snap-start min-h-screen"
         projects={Projects}
       />
-      {Projects.map((project, index) => (
+      {/* {Projects.map((project, index) => (
         <HomeSection
           key={index}
           className="scroll-snap-align snap-normal snap-start min-h-screen"
@@ -78,7 +78,7 @@ export default function Home() {
             sectionRefs.current[index] = el;
           }}
         />
-      ))}
+      ))} */}
       <IndexIndicator currentIndex={currentIndex} total={Projects.length} />
       <ProjectSelector
         navRefs={navRefs}
