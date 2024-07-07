@@ -224,14 +224,14 @@ const Hero = ({ className, projects }: ComponentProps) => {
                       : "calc((100vw - 60px) / 3)",
                 }}
               >
-                <video
+                {/* <video
                   src={project.src}
                   preload="auto"
                   playsInline
                   muted
                   loop
                   className="block h-full w-full object-cover"
-                />
+                /> */}
                 <div
                   aria-hidden="true"
                   className="project-details w-[0px] h-[0px] overflow-hidden"
